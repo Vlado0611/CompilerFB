@@ -1,0 +1,47 @@
+Program 	-> Definitions LET Declarations IN Command_Seq END
+
+Definition	-> Definition'
+
+Definition' 	-> Def Definition'
+
+Def 		-> HASHTAG DEFINE ID Expression SEMICOLON
+
+Definition
+
+Declarations 	-> INTEGER Id_seq Identifier. | eps
+
+Id_seq		-> Id_seq'
+Id_seq'		-> Identifier, Id_seq' | eps
+
+Command_Seq	-> Cmd_Seq
+Cmd_Seq		-> Command Cmd_Seq
+
+Command		->  AssignExpr  
+			| IfStmt
+			| WhileStmt
+			| ReadStmt
+			| WriteStmt
+
+
+IfCmd		-> IF Expression THEN Command_Seq EndIf
+EndIf		-> ELSE Command_Seq FI | FI
+
+WhileCmd	-> WHILE Expression DO Command_Seq END;
+ReadCmd		-> READ Identifier;
+WriteCmd	-> WRITE Expression;
+
+AssignExpr	-> Identifier := Expression;
+
+Expression	-> Expression2 Expr'
+Expr'		-> Compare Expression2 Expr' | eps
+Compare		-> < | > | =
+
+Expression2	-> Expression3 Expr2'
+Expr2'		-> PlusMinus Expression3 Expr2' | eps
+PlusMinus	-> + | -
+
+Expression3	-> Expression4 Expr3'
+Expr3'		-> MulDivMod Expression4 Expr3' | eps
+MulDiv		-> * | / | %
+
+Expression4	-> Number | Identifier | (Expression)
